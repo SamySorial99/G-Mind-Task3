@@ -165,7 +165,8 @@ public class Controller : MonoBehaviour
                 print("Inside restore");
                 gameOriginator.Restore(memento);
                 print(gameOriginator.GetPlayerPosition());
-                transform.position = gameOriginator.GetPlayerPosition();
+                Vector3 newPosition = gameOriginator.GetPlayerPosition();
+                transform.position = new Vector3(newPosition.x, newPosition.y + 1, newPosition.z);
             }
         }
     }
