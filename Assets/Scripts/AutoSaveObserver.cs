@@ -36,26 +36,41 @@ public class GameMemento
     }
 }
 
-// Originator class to create and restore mementos
 
 
-
-// Caretaker class to manage the mementos
 public class Caretaker
 {
-    private Stack<GameMemento> mementos = new Stack<GameMemento>();
+    private GameMemento memento;
 
-    public void AddMemento(GameMemento memento)
+    public void SetMemento(GameMemento memento)
     {
-        mementos.Push(memento);
+        this.memento = memento;
+        SaveMemento();
     }
 
     public GameMemento GetMemento()
     {
-        if (mementos.Count == 0)
+        LoadMemento();
+        return memento;
+    }
+
+    private void SaveMemento()
+    {
+        string json = JsonUtility.ToJson(memento);
+        PlayerPrefs.SetString("GameMemento", json);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadMemento()
+    {
+        string json = PlayerPrefs.GetString("GameMemento");
+        if (!string.IsNullOrEmpty(json))
         {
-            return null;
+            memento = JsonUtility.FromJson<GameMemento>(json);
         }
-        return mementos.Pop();
+        else
+        {
+            memento = new GameMemento(Vector3.zero); // Initial position
+        }
     }
 }

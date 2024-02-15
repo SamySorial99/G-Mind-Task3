@@ -148,9 +148,25 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.V))
         {
+
             // Save the player's current position
             gameOriginator.SetPlayerPosition(transform.position);
-            caretaker.AddMemento(gameOriginator.Save());
+            caretaker.SetMemento(gameOriginator.Save());
+            print("SHITTTTTTTTTTt");
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            print("WEWEEWE");
+            GameMemento memento = caretaker.GetMemento();
+            if (memento != null)
+            {
+                print("Inside restore");
+                gameOriginator.Restore(memento);
+                print(gameOriginator.GetPlayerPosition());
+                transform.position = gameOriginator.GetPlayerPosition();
+            }
         }
     }
 
